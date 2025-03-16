@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from surprise import Dataset, Reader, SVD
-from sklearn.metrics import precision_score, recall_score, f1_score, root_mean_squared_error
+from surprise import Dataset, Reader, SVD, accuracy
+from sklearn.metrics import precision_score, recall_score, f1_score
 
 # Load the ratings data
 ratings = pd.read_csv("ml-latest-small/ratings.csv")
@@ -55,18 +55,22 @@ true_binary_temp = test_data_temp['binary_rating'].values
 precision_random = precision_score(true_binary_random, predicted_binary_random)
 recall_random = recall_score(true_binary_random, predicted_binary_random)
 f1_random = f1_score(true_binary_random, predicted_binary_random)
+rmse_random = accuracy.rmse(predictions_random)
 
 print("Random Split Metrics:")
 print(f"Precision: {precision_random:.4f}")
 print(f"Recall: {recall_random:.4f}")
 print(f"F1-Score: {f1_random:.4f}")
+print(f"RMSE: {rmse_random:.4f}")
 
 # Compute metrics for temporal split
 precision_temp = precision_score(true_binary_temp, predicted_binary_temp)
 recall_temp = recall_score(true_binary_temp, predicted_binary_temp)
 f1_temp = f1_score(true_binary_temp, predicted_binary_temp)
+rmse_temp = accuracy.rmse(predictions_temp)
 
 print("Temporal Split Metrics:")
 print(f"Precision: {precision_temp:.4f}")
 print(f"Recall: {recall_temp:.4f}")
 print(f"F1-Score: {f1_temp:.4f}")
+print(f"RMSE: {rmse_temp:.4f}")
